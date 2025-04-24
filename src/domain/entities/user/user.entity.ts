@@ -6,23 +6,19 @@ type IUserModel = {
 	name: string;
 	password: string;
 	admin: boolean;
-	createdAt: Date;
-	updatedAt: Date;
+	created_at: Date;
 	image_perfil: string;
-	image_cover: string;
 	bio: string;
 };
 
 export class User {
 	private readonly _id: number;
-	private readonly _createdAt: Date;
-	private readonly _updatedAt: Date;
+	private readonly _created_at: Date;
 	private email: string;
 	private name: string;
 	private password: string;
 	private admin: boolean;
 	private image_perfil: string | null;
-	private image_cover: string | null;
 	private bio: string | null;
 
 	constructor(
@@ -31,8 +27,7 @@ export class User {
 			{
 				id?: number;
 				admin?: boolean;
-				createdAt?: Date;
-				updatedAt?: Date;
+				created_at?: Date;
 			}
 		>,
 	) {
@@ -41,10 +36,8 @@ export class User {
 		this.name = props.name;
 		this.password = props.password;
 		this.admin = props.admin ?? false;
-		this._createdAt = props.createdAt ?? new Date();
-		this._updatedAt = props.updatedAt ?? new Date();
+		this._created_at = props.created_at ?? new Date();
 		this.image_perfil = props.image_perfil ?? "";
-		this.image_cover = props.image_cover ?? "";
 		this.bio = props.bio ?? "";
 	}
 
@@ -69,19 +62,11 @@ export class User {
 	}
 
 	get getCreatedAt(): Date {
-		return this._createdAt;
-	}
-
-	get getUpdatedAt(): Date {
-		return this._updatedAt;
+		return this._created_at;
 	}
 
 	get getImage_perfil(): string | null {
 		return this.image_perfil ?? null;
-	}
-
-	get getImage_cover(): string | null {
-		return this.image_cover ?? null;
 	}
 
 	get getBio(): string | null {
@@ -106,10 +91,6 @@ export class User {
 
 	set setImage_perfil(value: string) {
 		this.image_perfil = value;
-	}
-
-	set setImage_cover(value: string) {
-		this.image_cover = value;
 	}
 
 	set setBio(value: string) {

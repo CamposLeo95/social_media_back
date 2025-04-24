@@ -22,18 +22,12 @@ export class UsersRoutes {
 		);
 		this.routes.post(
 			"/users",
-			this.upload.fields([
-				{ name: "perfil", maxCount: 1 },
-				{ name: "cover", maxCount: 1 },
-			]),
+			this.upload.single("image_perfil"),
 			this.userController.create.bind(this.userController),
 		);
 		this.routes.put(
 			"/users/:id",
-			this.upload.fields([
-				{ name: "perfil", maxCount: 1 },
-				{ name: "cover", maxCount: 1 },
-			]),
+			this.upload.single("image_perfil"),
 			this.userController.update.bind(this.userController),
 		);
 		this.routes.delete(

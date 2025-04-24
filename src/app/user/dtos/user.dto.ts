@@ -4,7 +4,6 @@ export type IUserInputCreateDTO = {
 	password: string;
 	admin: boolean;
 	image_perfil: string;
-	image_cover: string;
 	bio: string;
 };
 
@@ -15,7 +14,6 @@ export type IUserInputUpdateDTO = {
 	password?: string;
 	admin?: boolean;
 	image_perfil?: string;
-	image_cover?: string;
 	bio?: string;
 };
 
@@ -25,8 +23,7 @@ export type IUserOutputDTO = {
 	email: string;
 	password: string;
 	admin: boolean;
-	createdAt: Date;
+	created_at: Date;
 	image_perfil?: string;
-	image_cover?: string;
 	bio?: string;
 };

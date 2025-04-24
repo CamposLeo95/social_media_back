@@ -46,8 +46,7 @@ export class PrismaUserRepository implements UserRepository {
 		try {
 			const user = new User({
 				id: 0,
-				createdAt: new Date(),
-				updatedAt: new Date(),
+				created_at: new Date(),
 				...userDTO,
 			});
 			const userRaw = PrismaUserMapper.toPrisma(user);
@@ -76,13 +75,11 @@ export class PrismaUserRepository implements UserRepository {
 
 			const user = new User({
 				id: userDTO.id,
-				createdAt: userExists.createdAt,
-				updatedAt: userExists.updatedAt,
+				created_at: userExists.created_at || new Date(),
 				email: userDTO.email || userExists.email,
 				name: userDTO.name || userExists.name,
-				password: userDTO.password || userExists.password,
+				password: userExists.password || "",
 				image_perfil: userDTO.image_perfil || userExists.image_perfil || "",
-				image_cover: userDTO.image_cover || userExists.image_cover || "",
 				bio: userDTO.bio || userExists.bio || "",
 			});
 

@@ -1,13 +1,11 @@
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(100) NOT NULL UNIQUE,
+	id SERIAL PRIMARY KEY,
+	email VARCHAR(100) NOT NULL UNIQUE,
 	name VARCHAR(100) NOT NULL,
-	password TEXT,
+	password TEXT NOT NULL,
 	admin BOOLEAN DEFAULT false,
 	created_at TIMESTAMP DEFAULT NOW(),
-	updated_at TIMESTAMP DEFAULT NOW(),
 	image_perfil TEXT,
-	image_cover TEXT,
 	bio VARCHAR(100)
 )
 
@@ -36,7 +34,7 @@ CREATE TABLE likes (
 	id_user INT,
 	id_post INT,
 	created_at TIMESTAMP DEFAULT NOW(),
-	PRIMARY KEY(id_user, id_post),
+	PRIMARY KEY(id_post, id_user),
 	FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
 	FOREIGN KEY (id_post) REFERENCES posts(id) ON DELETE CASCADE
 )

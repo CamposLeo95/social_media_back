@@ -4,7 +4,6 @@ import type { DeleteUserUseCase } from "../../../domain/useCases/user/delete-use
 import type { FindAllUserUseCase } from "../../../domain/useCases/user/find-all-user.usecase";
 import type { FindUserByIdUseCase } from "../../../domain/useCases/user/find-user-by-id.usecase";
 import type { UpdateUserUseCase } from "../../../domain/useCases/user/update-user";
-import { AppError } from "../../../shared/exceptions/AppError";
 
 import {
 	deleteUsersFromGCS,
@@ -44,14 +43,11 @@ export class UsersControllers {
 	}
 
 	async create(req: Request, res: Response, next: NextFunction) {
-		const files = req.files;
-		const imageUserFile = files["perfil"]?.[0];
-		const imageCoverFile = files["cover"]?.[0];
-
-		const imageUserPath =
-			(await uploadUsersToGCS(imageUserFile, "users")) || "";
-		const imageCoverPath =
-			(await uploadUsersToGCS(imageCoverFile, "users")) || "";
+		const file = req.file;
+		let imageUserPath = "";
+		if (file && file?.originalname !== "undefined") {
+			imageUserPath = (await uploadUsersToGCS(file, "users")) || "";
+		}
 
 		try {
 			const body: IUserInputCreateDTO = req.body;
@@ -61,27 +57,23 @@ export class UsersControllers {
 				admin: !!body.admin,
 				password: body.password,
 				image_perfil: imageUserPath,
-				image_cover: imageCoverPath,
 				bio: body.bio,
 			};
-			await this.createUser.execute(userCreateDTO);
 
+			await this.createUser.execute(userCreateDTO);
 			return res.status(201).json({ message: "Usuario criado com sucesso" });
 		} catch (error: unknown) {
 			await deleteUsersFromGCS(imageUserPath);
-			await deleteUsersFromGCS(imageCoverPath);
 			next(error);
 		}
 	}
 
 	async update(req: Request, res: Response, next: NextFunction) {
-		const files = req.files;
-		const imageUserFile = files["perfil"]?.[0];
-		const imageCoverFile = files["cover"]?.[0];
-		const imageUserPath =
-			(await uploadUsersToGCS(imageUserFile, "users")) || "";
-		const imageCoverPath =
-			(await uploadUsersToGCS(imageCoverFile, "users")) || "";
+		const file = req.file;
+		let imageUserPath = "";
+		if (file && file?.originalname !== "undefined") {
+			imageUserPath = (await uploadUsersToGCS(file, "users")) || "";
+		}
 		try {
 			const idUser = Number(req.params.id);
 			const body = req.body;
@@ -93,7 +85,6 @@ export class UsersControllers {
 				admin: !!body.admin,
 				password: body.password,
 				image_perfil: imageUserPath,
-				image_cover: imageCoverPath,
 				bio: body.bio,
 			};
 
@@ -104,7 +95,6 @@ export class UsersControllers {
 				.json({ message: "Usuario atualizado com sucesso" });
 		} catch (error) {
 			await deleteUsersFromGCS(imageUserPath);
-			await deleteUsersFromGCS(imageCoverPath);
 			next(error);
 		}
 	}

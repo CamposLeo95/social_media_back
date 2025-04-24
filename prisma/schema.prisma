@@ -9,14 +9,12 @@ datasource db {
 
 model User {
   id           Int       @id @default(autoincrement())
-  email        String    @unique
-  name         String
+  email        String    @unique @db.VarChar(100)
+  name         String    @db.VarChar(100)
   password     String
-  admin        Boolean   @default(false)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @default(now())
+  admin        Boolean?  @default(false)
+  created_at   DateTime? @default(now()) @db.Timestamp(6)
   image_perfil String?
-  image_cover  String?
   bio          String?   @db.VarChar(100)
   comments     Comment[]
   likes        Like[]
@@ -29,22 +27,23 @@ model Post {
   id         Int       @id @default(autoincrement())
   content    String
   image_url  String?
-  id_user    Int
-  created_at DateTime  @default(now()) @db.Timestamp(6)
+  id_user    Int?
+  created_at DateTime? @default(now()) @db.Timestamp(6)
   comments   Comment[]
-  user       User      @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "posts_userId_fkey")
+  likes      Like[]
+  user       User?     @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "posts_userId_fkey")
 
   @@map("posts")
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
-  content    String
-  id_user    Int
-  id_post    Int
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  post       Post     @relation(fields: [id_post], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "comments_postId_fkey")
-  user       User     @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "comments_userId_fkey")
+  id        Int       @id @default(autoincrement())
+  content   String?
+  id_user   Int?
+  id_post   Int?
+  create_at DateTime? @default(now()) @db.Timestamp(6)
+  post      Post?     @relation(fields: [id_post], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "comments_postId_fkey")
+  user      User?     @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "comments_userId_fkey")
 
   @@map("comments")
 }
@@ -52,8 +51,9 @@ model Comment {
 model Like {
   id_post    Int
   id_user    Int
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  user       User     @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  created_at DateTime? @default(now()) @db.Timestamp(6)
+  posts      Post      @relation(fields: [id_post], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user       User      @relation(fields: [id_user], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([id_post, id_user], name: "id_user_id_post")
   @@map("likes")
