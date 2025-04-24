@@ -13,7 +13,7 @@ Back End da aplicação rede social. Projeto desenvolvido como laboratório de e
 - [✅] Criar bucket na cloud
 - [✅] Enviar essas imagens para o bucket
 - [✅] Docker
-- [🔄️] Testes automatizados
+- [🔄️] Testes automatizados!
 - [🔄️] Cloud (GCP) - Cloud run
 
 
