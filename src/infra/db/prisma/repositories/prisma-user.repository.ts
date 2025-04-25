@@ -44,18 +44,12 @@ export class PrismaUserRepository implements UserRepository {
 	}
 	async create(userDTO: IUserInputCreateDTO) {
 		try {
-			const user = new User({
-				id: 0,
-				created_at: new Date(),
-				...userDTO,
-			});
-			const userRaw = PrismaUserMapper.toPrisma(user);
 			const isExistUser = await this.client.user.findUnique({
-				where: { email: user.getEmail },
+				where: { email: userDTO.email },
 			});
 			if (isExistUser) throw new AppError("Email já cadastrado", 400);
 			const res = await this.client.user.create({
-				data: userRaw,
+				data: userDTO,
 			});
 			if (!res) throw new AppError("Erro ao criar usuário no banco", 500);
 		} catch (error) {

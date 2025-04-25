@@ -12,7 +12,7 @@ interface IPrismaCreate {
 }
 // biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class PrismaUserMapper {
-	static toPrisma(props: User): IPrismaCreate {
+	static toPrisma(props: Omit<User, "id" | "created_at">): IPrismaCreate {
 		return {
 			name: props.getName,
 			email: props.getEmail,

@@ -1,13 +1,13 @@
 import type { Replace } from "../../../shared/utils/replace";
 
 type IUserModel = {
-	id: number;
+	id?: number;
 	email: string;
 	name: string;
 	password: string;
 	admin: boolean;
-	created_at: Date;
-	image_perfil: string;
+	created_at?: Date;
+	image_perfil?: string;
 	bio: string;
 };
 
