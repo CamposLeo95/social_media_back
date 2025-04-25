@@ -21,7 +21,7 @@ describe("find-all-users-usecase", () => {
 				name: "John Doe",
 				email: "john@example.com",
 				password: "hash_pass",
-				createdAt: new Date("2025-03-24T14:25:22.402Z"),
+				created_at: new Date("2025-03-24T14:25:22.402Z"),
 				admin: false,
 			},
 		]);
@@ -38,7 +38,7 @@ describe("find-all-users-usecase", () => {
 				name: "John Doe",
 				email: "john@example.com",
 				password: "hash_pass",
-				createdAt: new Date("2025-03-24T14:25:22.402Z"),
+				created_at: new Date("2025-03-24T14:25:22.402Z"),
 				admin: false,
 			},
 			{
@@ -46,7 +46,7 @@ describe("find-all-users-usecase", () => {
 				name: "jane Doe",
 				email: "jane@example.com",
 				password: "hash_pass",
-				createdAt: new Date("2025-03-24T14:25:22.402Z"),
+				created_at: new Date("2025-03-24T14:25:22.402Z"),
 				admin: false,
 			},
 		]);
@@ -61,7 +61,7 @@ describe("find-all-users-usecase", () => {
 			name: "John Doe",
 			email: "john@example.com",
 			password: "hash_pass",
-			createdAt: new Date("2025-03-24T14:25:22.402Z"),
+			created_at: new Date("2025-03-24T14:25:22.402Z"),
 			admin: false,
 		});
 		// biome-ignore lint/style/noNonNullAssertion: <explanation>
@@ -70,7 +70,7 @@ describe("find-all-users-usecase", () => {
 			name: "jane Doe",
 			email: "jane@example.com",
 			password: "hash_pass",
-			createdAt: new Date("2025-03-24T14:25:22.402Z"),
+			created_at: new Date("2025-03-24T14:25:22.402Z"),
 			admin: false,
 		});
 	});

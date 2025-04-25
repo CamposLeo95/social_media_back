@@ -1,7 +1,7 @@
-import type { IUserOutputDTO } from "../../../../app/user/dtos/user.dto";
 import type { UserRepository } from "../../../../app/user/repositories/user.repository";
 import { FindUserByEmailUseCase } from "../../../../domain/useCases/user/find-user-by-email.usecase";
 import { AppError } from "../../../../shared/exceptions/AppError";
+import { userMockedReturn } from "./mocks/user.mocks";
 
 describe("find-user-by-email", () => {
 	let userRepo: jest.Mocked<UserRepository>;
@@ -15,20 +15,14 @@ describe("find-user-by-email", () => {
 
 	it("should return user correctly", async () => {
 		const mockedEmail = "mocked@email.com";
-		const usersReturn: IUserOutputDTO = {
-			id: 1,
-			name: "fake",
-			email: mockedEmail,
-			admin: false,
-			password: "@fsda#@",
-			created_at: new Date(),
-		};
+		const userReturn = userMockedReturn;
+		userReturn.email = mockedEmail;
 
-		userRepo.findByEmail.mockResolvedValue(usersReturn);
+		userRepo.findByEmail.mockResolvedValue(userReturn);
 		const result = await findUserByEmail.execute(mockedEmail);
 
 		expect(userRepo.findByEmail).toHaveBeenCalledWith(mockedEmail);
-		expect(result).toEqual(usersReturn);
+		expect(result).toEqual(userReturn);
 	});
 
 	it("should return 404 when user not exists", async () => {
